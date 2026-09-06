@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#312e81">
-<title>Bibel-Halle v070</title>
+<title>Bibel-Halle v071</title>
 <link rel="icon" type="image/png" href="assets/logo_bibel-halle.png">
 
-<link rel="stylesheet" href="bible-hall-theme.css?v=070">
+<link rel="stylesheet" href="bible-hall-theme.css?v=071">
 <style id="admin-responsive-fixes">
 .admin-layout{display:grid;grid-template-columns:minmax(210px,260px) minmax(0,1fr);gap:22px;align-items:start}
 .admin-tabs-panel{position:sticky;top:90px;padding:10px;border-radius:22px;background:#f1f5f9;border:1px solid #e2e8f0;box-shadow:0 8px 24px rgba(48,25,55,.06)}
@@ -218,6 +218,44 @@
 .room-design-chip.active{border-color:#8b2fc9!important;background:#f6eaff!important;box-shadow:0 0 0 2px rgba(139,47,201,.15)}
 .room-design-chip{cursor:pointer}
 @media(max-width:767px){.shelf-zone .custom-shelf-skin{inset:5px;width:calc(100% - 10px);height:calc(100% - 10px)}}
+</style><style id="shelf-fit-v071">
+/* Das vollständige Designregal liegt mit Sicherheitsabstand innerhalb der Regalfläche. */
+.shelf-zone.has-custom-shelf{
+  padding:clamp(18px,2.1vw,34px)!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  background:#f7edd9!important;
+  border-radius:24px!important;
+}
+.shelf-zone.has-custom-shelf .custom-shelf-skin{
+  position:absolute!important;
+  inset:clamp(18px,2.1vw,34px)!important;
+  width:calc(100% - 2 * clamp(18px,2.1vw,34px))!important;
+  height:calc(100% - 2 * clamp(18px,2.1vw,34px))!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  border-radius:8px!important;
+  pointer-events:none!important;
+  display:block!important;
+  z-index:0!important;
+}
+/* Keine zweite Standard-Regalgrafik und kein äußerer Standardrahmen hinter dem Design. */
+.shelf-zone.has-custom-shelf .shelf-unit{display:none!important}
+.shelf-zone.has-custom-shelf::before,
+.shelf-zone.has-custom-shelf::after{display:none!important;content:none!important}
+.shelf-zone.has-custom-shelf .draggable-award{
+  z-index:4!important;
+}
+/* Pokale bleiben innerhalb des sichtbaren Regals und nicht im Sicherheitsrand. */
+.shelf-zone.has-custom-shelf .draggable-award[data-type="trophies"]{
+  --shelf-safe-x:clamp(18px,2.1vw,34px);
+}
+@media(max-width:767px){
+  .shelf-zone.has-custom-shelf{padding:12px!important;border-radius:18px!important}
+  .shelf-zone.has-custom-shelf .custom-shelf-skin{inset:12px!important;width:calc(100% - 24px)!important;height:calc(100% - 24px)!important}
+}
 </style></head>
 <body>
 <section id="auth"><div class="auth-grid"><div class="hero"><img class="brand-logo auth-brand-logo" src="assets/logo_bibel-halle.png" alt="Bibel-Halle Logo"><h1>Bibel-Halle</h1><p>Lies die Bibel, entdecke Spiele, sammle Abzeichen und gestalte deine eigene Ruhmeshalle.</p></div><div class="card authbox"><div class="tabs"><button id="tab-login" class="active">Anmelden</button><button id="tab-register">Registrieren</button></div><div id="auth-alert"></div><form id="login-form"><div class="field"><label>Name</label><input id="login-name" name="username" autocomplete="username" required></div><div class="field"><label>Passwort</label><input id="login-password" name="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">🔑 Anmelden</button><button type="button" id="forgot-open" class="btn sec" style="width:100%;margin-top:10px">Passwort vergessen?</button></form><form id="register-form" class="hidden"><div class="field"><label>Name</label><input id="reg-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Passwort</label><input id="reg-password" name="new-password" type="password" autocomplete="new-password" minlength="6" required></div><div class="field"><label>Passwort wiederholen</label><input id="reg-password2" name="new-password-confirm" type="password" autocomplete="new-password" minlength="6" required></div><button class="btn" style="width:100%">Konto erstellen</button></form><form id="forgot-form" class="hidden"><div class="field"><label>Benutzername</label><input id="forgot-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Kontakt-Mailadresse</label><input id="forgot-email" name="email" type="email" autocomplete="email" required></div><div class="field"><label>Nachricht an den Administrator (optional)</label><textarea id="forgot-message" maxlength="1000" placeholder="Zum Beispiel Hinweise zu deinem Konto"></textarea></div><p class="muted">Der Administrator prüft die Anfrage und nimmt über die angegebene Mailadresse Kontakt auf.</p><button class="btn" style="width:100%">Anfrage senden</button><button type="button" id="reset-open" class="btn sec" style="width:100%;margin-top:10px">Ich habe bereits einen Rücksetzcode</button><button type="button" id="forgot-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form><form id="reset-code-form" class="hidden"><div class="field"><label>Einmaliger Rücksetzcode</label><input id="reset-code" autocomplete="one-time-code" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" required></div><div class="field"><label>Neues Passwort</label><input id="reset-new-password" type="password" autocomplete="new-password" minlength="8" required></div><div class="field"><label>Neues Passwort wiederholen</label><input id="reset-new-password2" type="password" autocomplete="new-password" minlength="8" required></div><button class="btn" style="width:100%">Passwort zurücksetzen</button><button type="button" id="reset-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form></div></div></section>
@@ -281,7 +319,7 @@ function showApp(){$('#auth').classList.add('hidden');$('#shell').classList.remo
 function userInitial(){const n=(user?.username||'?').trim();return user?.equippedShopImage?`<img class="top-profile-image" src="${displayAssetUrl(user.equippedShopImage)}" alt="Profilbild">`:esc(user?.equippedEmoji||(n[0]||'?').toUpperCase())}
 function notificationBadge(count){return count?`<span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;margin-left:5px;border-radius:999px;background:#dc2626;color:white;font-size:.72rem;font-weight:900;line-height:1">${count}</span>`:''}
 function adminNotificationCount(){return ORDERS.filter(o=>o.status==='new').length+PASSWORD_RESET_REQUESTS.filter(r=>r.status==='new').length}
-function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v070</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;renderNav();render()});updateChrome()}
+function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v071</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;renderNav();render()});updateChrome()}
 function updateChrome(){$('#coin-chip').textContent=`🪙 ${user.coins||0} Coins`;$('#mobile-coins').textContent=`${user.coins||0} 🪙`}
 function head(icon,title,sub){return `<div class="page-head"><div class="ico">${icon}</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>`}
 function render(){updateChrome();if(page==='library')renderLibrary();if(page==='shop')renderShop();if(page==='room')renderRoom();if(page==='profile')renderProfile();if(page==='admin')renderAdmin()}
