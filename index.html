@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#312e81">
-<title>Bibel-Halle v072</title>
+<title>Bibel-Halle v073</title>
 <link rel="icon" type="image/png" href="assets/logo_bibel-halle.png">
 
-<link rel="stylesheet" href="bible-hall-theme.css?v=072">
+<link rel="stylesheet" href="bible-hall-theme.css?v=073">
 <style id="admin-responsive-fixes">
 .admin-layout{display:grid;grid-template-columns:minmax(210px,260px) minmax(0,1fr);gap:22px;align-items:start}
 .admin-tabs-panel{position:sticky;top:90px;padding:10px;border-radius:22px;background:#f1f5f9;border:1px solid #e2e8f0;box-shadow:0 8px 24px rgba(48,25,55,.06)}
@@ -243,6 +243,68 @@
 /* Fallback */
 .shelf-zone[data-shelf-skin="wood"]{--shelf-edge:linear-gradient(90deg,#482716,#9a5d32 35%,#6e3b20 70%,#321a0f);--shelf-highlight:#d8a372;--shelf-inner:#71401f;--shelf-cell:linear-gradient(145deg,#f6e1b9,#dbba7e 70%,#c99955)}
 @media(max-width:767px){.shelf-zone.has-custom-shelf .shelf-unit{inset:3.5%!important;width:93%!important;height:93%!important}.shelf-zone.has-custom-shelf .shelf-grid{border-width:10px!important}.shelf-zone.has-custom-shelf .shelf-cell{border-right-width:6px!important;border-bottom-width:6px!important}}
+</style><style id="shelf-frame-system-v073">
+/* Das Regalbild ist nur die Shop-Vorschau. Im Pokalraum bleibt das responsive Standardraster bestehen. */
+.shelf-zone.has-custom-shelf{
+  padding:0!important;
+  overflow:hidden!important;
+  background:#f7edd9!important;
+  border-radius:24px!important;
+}
+.shelf-zone.has-custom-shelf .custom-shelf-skin{display:none!important}
+.shelf-zone.has-custom-shelf .shelf-unit{
+  display:block!important;
+  position:absolute!important;
+  inset:3.2%!important;
+  width:93.6%!important;
+  height:93.6%!important;
+  box-sizing:border-box!important;
+  padding:clamp(13px,1.25vw,23px)!important;
+  border-radius:clamp(15px,1.25vw,23px)!important;
+  overflow:hidden!important;
+  background:var(--shelf-material)!important;
+  box-shadow:var(--shelf-shadow)!important;
+}
+.shelf-zone.has-custom-shelf .shelf-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  grid-template-rows:repeat(3,minmax(0,1fr))!important;
+  gap:clamp(8px,.75vw,14px)!important;
+  width:100%!important;
+  height:100%!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:clamp(7px,.65vw,12px)!important;
+  overflow:hidden!important;
+  background:var(--shelf-material)!important;
+  box-shadow:inset 0 0 0 2px var(--shelf-line)!important;
+}
+.shelf-zone.has-custom-shelf .shelf-cell{
+  position:relative!important;
+  min-width:0!important;
+  min-height:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:var(--shelf-compartment)!important;
+  box-shadow:inset 0 10px 18px rgba(255,255,255,.10),inset 0 -12px 18px rgba(0,0,0,.10)!important;
+}
+.shelf-zone.has-custom-shelf .shelf-cell::before,
+.shelf-zone.has-custom-shelf .shelf-cell::after{pointer-events:none}
+.shelf-zone.has-custom-shelf .draggable-award{z-index:5!important}
+.shelf-zone[data-shelf-skin="gold"]{--shelf-material:linear-gradient(100deg,#7d4700,#d2930d 13%,#fff08a 31%,#c57c00 53%,#ffe66c 76%,#714000);--shelf-compartment:linear-gradient(145deg,#fff8de,#edd398 70%,#d8b66e);--shelf-line:#fff3a4;--shelf-shadow:inset 0 0 0 3px #ffec82,0 7px 19px rgba(92,53,0,.25)}
+.shelf-zone[data-shelf-skin="silver"]{--shelf-material:linear-gradient(100deg,#565c64,#b8bec5 16%,#fff 34%,#939aa3 55%,#e7ebef 77%,#4f555d);--shelf-compartment:linear-gradient(145deg,#f4f6f8,#d7dce1 72%,#b9c0c8);--shelf-line:#fff;--shelf-shadow:inset 0 0 0 3px #f8fbff,0 7px 19px rgba(42,49,57,.25)}
+.shelf-zone[data-shelf-skin="gemstone"]{--shelf-material:linear-gradient(100deg,#744000,#e0a21f 14%,#ffe879 27%,#bd45cb 43%,#44b6ee 58%,#f3bd24 74%,#744000);--shelf-compartment:linear-gradient(145deg,#fff9dc,#efd59a 72%,#dab66b);--shelf-line:#fff0a0;--shelf-shadow:inset 0 0 0 3px #ffe77d,0 0 18px rgba(167,58,224,.30),0 7px 19px rgba(88,47,0,.22)}
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(1)::before,
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(3)::before,
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(7)::before,
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(9)::before{content:"◆";position:absolute;color:#cb42de;font-size:clamp(10px,1vw,17px);text-shadow:0 0 4px #fff,0 0 8px #5bbcff;z-index:2}
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(1)::before,.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(3)::before{top:3px}
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(7)::before,.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(9)::before{bottom:3px}
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(1)::before,.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(7)::before{left:4px}
+.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(3)::before,.shelf-zone[data-shelf-skin="gemstone"] .shelf-cell:nth-child(9)::before{right:4px}
+.shelf-zone[data-shelf-skin="neon"]{--shelf-material:linear-gradient(100deg,#12d8ff,#5550ff 25%,#ee35db 52%,#ff42ad 72%,#ffd52d);--shelf-compartment:radial-gradient(circle at 50% 35%,#142553,#080d27 63%,#030617);--shelf-line:#9df6ff;--shelf-shadow:inset 0 0 0 3px #32e5ff,0 0 12px #21d7ff,0 0 26px rgba(244,48,220,.48)}
+.shelf-zone[data-shelf-skin="wood"]{--shelf-material:linear-gradient(100deg,#32170d,#754020 18%,#b37743 36%,#6d371b 62%,#9a5a2e 80%,#2d150c);--shelf-compartment:linear-gradient(145deg,#f5e0b7,#dbb97d 72%,#c89853);--shelf-line:#d6a16c;--shelf-shadow:inset 0 0 0 3px #b97845,0 7px 19px rgba(45,20,7,.28)}
+@media(max-width:767px){.shelf-zone.has-custom-shelf .shelf-unit{inset:2.5%!important;width:95%!important;height:95%!important;padding:9px!important;border-radius:13px!important}.shelf-zone.has-custom-shelf .shelf-grid{gap:6px!important;border-radius:6px!important}}
 </style></head>
 <body>
 <section id="auth"><div class="auth-grid"><div class="hero"><img class="brand-logo auth-brand-logo" src="assets/logo_bibel-halle.png" alt="Bibel-Halle Logo"><h1>Bibel-Halle</h1><p>Lies die Bibel, entdecke Spiele, sammle Abzeichen und gestalte deine eigene Ruhmeshalle.</p></div><div class="card authbox"><div class="tabs"><button id="tab-login" class="active">Anmelden</button><button id="tab-register">Registrieren</button></div><div id="auth-alert"></div><form id="login-form"><div class="field"><label>Name</label><input id="login-name" name="username" autocomplete="username" required></div><div class="field"><label>Passwort</label><input id="login-password" name="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">🔑 Anmelden</button><button type="button" id="forgot-open" class="btn sec" style="width:100%;margin-top:10px">Passwort vergessen?</button></form><form id="register-form" class="hidden"><div class="field"><label>Name</label><input id="reg-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Passwort</label><input id="reg-password" name="new-password" type="password" autocomplete="new-password" minlength="6" required></div><div class="field"><label>Passwort wiederholen</label><input id="reg-password2" name="new-password-confirm" type="password" autocomplete="new-password" minlength="6" required></div><button class="btn" style="width:100%">Konto erstellen</button></form><form id="forgot-form" class="hidden"><div class="field"><label>Benutzername</label><input id="forgot-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Kontakt-Mailadresse</label><input id="forgot-email" name="email" type="email" autocomplete="email" required></div><div class="field"><label>Nachricht an den Administrator (optional)</label><textarea id="forgot-message" maxlength="1000" placeholder="Zum Beispiel Hinweise zu deinem Konto"></textarea></div><p class="muted">Der Administrator prüft die Anfrage und nimmt über die angegebene Mailadresse Kontakt auf.</p><button class="btn" style="width:100%">Anfrage senden</button><button type="button" id="reset-open" class="btn sec" style="width:100%;margin-top:10px">Ich habe bereits einen Rücksetzcode</button><button type="button" id="forgot-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form><form id="reset-code-form" class="hidden"><div class="field"><label>Einmaliger Rücksetzcode</label><input id="reset-code" autocomplete="one-time-code" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" required></div><div class="field"><label>Neues Passwort</label><input id="reset-new-password" type="password" autocomplete="new-password" minlength="8" required></div><div class="field"><label>Neues Passwort wiederholen</label><input id="reset-new-password2" type="password" autocomplete="new-password" minlength="8" required></div><button class="btn" style="width:100%">Passwort zurücksetzen</button><button type="button" id="reset-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form></div></div></section>
@@ -306,7 +368,7 @@ function showApp(){$('#auth').classList.add('hidden');$('#shell').classList.remo
 function userInitial(){const n=(user?.username||'?').trim();return user?.equippedShopImage?`<img class="top-profile-image" src="${displayAssetUrl(user.equippedShopImage)}" alt="Profilbild">`:esc(user?.equippedEmoji||(n[0]||'?').toUpperCase())}
 function notificationBadge(count){return count?`<span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;margin-left:5px;border-radius:999px;background:#dc2626;color:white;font-size:.72rem;font-weight:900;line-height:1">${count}</span>`:''}
 function adminNotificationCount(){return ORDERS.filter(o=>o.status==='new').length+PASSWORD_RESET_REQUESTS.filter(r=>r.status==='new').length}
-function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v072</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;renderNav();render()});updateChrome()}
+function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v073</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;renderNav();render()});updateChrome()}
 function updateChrome(){$('#coin-chip').textContent=`🪙 ${user.coins||0} Coins`;$('#mobile-coins').textContent=`${user.coins||0} 🪙`}
 function head(icon,title,sub){return `<div class="page-head"><div class="ico">${icon}</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>`}
 function render(){updateChrome();if(page==='library')renderLibrary();if(page==='shop')renderShop();if(page==='room')renderRoom();if(page==='profile')renderProfile();if(page==='admin')renderAdmin()}
