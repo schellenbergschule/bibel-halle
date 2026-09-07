@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#312e81">
-<title>Bibel-Halle v075</title>
+<title>Bibel-Halle v076</title>
 <link rel="icon" type="image/png" href="assets/logo_bibel-halle.png">
 
-<link rel="stylesheet" href="bible-hall-theme.css?v=075">
+<link rel="stylesheet" href="bible-hall-theme.css?v=076">
 <style id="admin-responsive-fixes">
 .admin-layout{display:grid;grid-template-columns:minmax(210px,260px) minmax(0,1fr);gap:22px;align-items:start}
 .admin-tabs-panel{position:sticky;top:90px;padding:10px;border-radius:22px;background:#f1f5f9;border:1px solid #e2e8f0;box-shadow:0 8px 24px rgba(48,25,55,.06)}
@@ -384,6 +384,38 @@
 .shop-unlock-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .shop-unlock-help{padding:10px 12px;border-radius:12px;background:#f5f3ff;color:#4c1d6f;font-size:.9rem}
 @media(max-width:700px){.shop-unlock-grid{grid-template-columns:1fr}}
+</style><style id="pinboard-frame-overlay-v076">
+/* Vollständiges Overlay statt border-image: keine zerschnittenen Ecken oder Übergänge. */
+.pinboard-zone.has-custom-frame{
+  border-image:none!important;
+  border-color:transparent!important;
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+}
+.pinboard-zone.has-custom-frame::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:8!important;
+  pointer-events:none!important;
+  background-image:var(--pinboard-frame)!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:100% 100%!important;
+  border-radius:inherit!important;
+}
+.pinboard-zone.has-custom-frame .pinboard-inner{inset:0!important}
+.pinboard-zone.has-custom-frame .draggable-award{z-index:5!important}
+/* Die überarbeiteten Texturen bleiben klar erkennbar, ohne die Gegenstände zu überdecken. */
+.pinboard-zone.has-custom-background .pinboard-inner{
+  background-color:#d2ad7b!important;
+  background-image:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),var(--pinboard-background)!important;
+  filter:saturate(.96) contrast(1.02)!important;
+  background-size:cover!important;
+  background-position:center!important;
+}
+@media(max-width:767px){.pinboard-zone.has-custom-frame::after{background-size:100% 100%!important}}
 </style></head>
 <body>
 <section id="auth"><div class="auth-grid"><div class="hero"><img class="brand-logo auth-brand-logo" src="assets/logo_bibel-halle.png" alt="Bibel-Halle Logo"><h1>Bibel-Halle</h1><p>Lies die Bibel, entdecke Spiele, sammle Abzeichen und gestalte deine eigene Ruhmeshalle.</p></div><div class="card authbox"><div class="tabs"><button id="tab-login" class="active">Anmelden</button><button id="tab-register">Registrieren</button></div><div id="auth-alert"></div><form id="login-form"><div class="field"><label>Name</label><input id="login-name" name="username" autocomplete="username" required></div><div class="field"><label>Passwort</label><input id="login-password" name="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">🔑 Anmelden</button><button type="button" id="forgot-open" class="btn sec" style="width:100%;margin-top:10px">Passwort vergessen?</button></form><form id="register-form" class="hidden"><div class="field"><label>Name</label><input id="reg-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Passwort</label><input id="reg-password" name="new-password" type="password" autocomplete="new-password" minlength="6" required></div><div class="field"><label>Passwort wiederholen</label><input id="reg-password2" name="new-password-confirm" type="password" autocomplete="new-password" minlength="6" required></div><button class="btn" style="width:100%">Konto erstellen</button></form><form id="forgot-form" class="hidden"><div class="field"><label>Benutzername</label><input id="forgot-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Kontakt-Mailadresse</label><input id="forgot-email" name="email" type="email" autocomplete="email" required></div><div class="field"><label>Nachricht an den Administrator (optional)</label><textarea id="forgot-message" maxlength="1000" placeholder="Zum Beispiel Hinweise zu deinem Konto"></textarea></div><p class="muted">Der Administrator prüft die Anfrage und nimmt über die angegebene Mailadresse Kontakt auf.</p><button class="btn" style="width:100%">Anfrage senden</button><button type="button" id="reset-open" class="btn sec" style="width:100%;margin-top:10px">Ich habe bereits einen Rücksetzcode</button><button type="button" id="forgot-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form><form id="reset-code-form" class="hidden"><div class="field"><label>Einmaliger Rücksetzcode</label><input id="reset-code" autocomplete="one-time-code" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" required></div><div class="field"><label>Neues Passwort</label><input id="reset-new-password" type="password" autocomplete="new-password" minlength="8" required></div><div class="field"><label>Neues Passwort wiederholen</label><input id="reset-new-password2" type="password" autocomplete="new-password" minlength="8" required></div><button class="btn" style="width:100%">Passwort zurücksetzen</button><button type="button" id="reset-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form></div></div></section>
@@ -447,7 +479,7 @@ function showApp(){$('#auth').classList.add('hidden');$('#shell').classList.remo
 function userInitial(){const n=(user?.username||'?').trim();return user?.equippedShopImage?`<img class="top-profile-image" src="${displayAssetUrl(user.equippedShopImage)}" alt="Profilbild">`:esc(user?.equippedEmoji||(n[0]||'?').toUpperCase())}
 function notificationBadge(count){return count?`<span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;margin-left:5px;border-radius:999px;background:#dc2626;color:white;font-size:.72rem;font-weight:900;line-height:1">${count}</span>`:''}
 function adminNotificationCount(){return ORDERS.filter(o=>o.status==='new').length+PASSWORD_RESET_REQUESTS.filter(r=>r.status==='new').length}
-function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v075</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;renderNav();render()});updateChrome()}
+function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v076</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;renderNav();render()});updateChrome()}
 function updateChrome(){$('#coin-chip').textContent=`🪙 ${user.coins||0} Coins`;$('#mobile-coins').textContent=`${user.coins||0} 🪙`}
 function head(icon,title,sub){return `<div class="page-head"><div class="ico">${icon}</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>`}
 function render(){updateChrome();if(page==='library')renderLibrary();if(page==='shop')renderShop();if(page==='room')renderRoom();if(page==='profile')renderProfile();if(page==='admin')renderAdmin()}
