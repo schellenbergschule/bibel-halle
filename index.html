@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#312e81">
-<title>Bibel-Halle v104</title>
+<title>Bibel-Halle v105</title>
 <link rel="icon" type="image/png" href="assets/logo_bibel-halle.png">
 
 <link rel="stylesheet" href="bible-hall-theme.css?v=081">
@@ -621,7 +621,8 @@
 }
 </style><style id="v104-touch-and-pair-games">
 /* Einheitliche Touch-Basis fuer interaktive Spielkarten. */
-.cloze-word,.cloze-slot,.match-card,.memory-card,#cloze-check{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cloze-slot,.memory-card,#cloze-check{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cloze-word,.match-card.drag-source{touch-action:none!important;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 .cloze-word:not(.used),.match-card.drag-source{cursor:grab;user-select:none;-webkit-user-select:none}
 .cloze-word.dragging-touch,.match-card.dragging-touch{position:fixed!important;z-index:100010!important;pointer-events:none!important;margin:0!important;opacity:.96;transform:scale(1.04);box-shadow:0 18px 38px rgba(40,20,55,.3)}
 .cloze-slot.drop-hover,.match-card.drop-hover{outline:3px solid #8b5cf6!important;outline-offset:3px;background:#f5f3ff!important}
@@ -641,6 +642,11 @@
 @keyframes v104MemoryBad{0%,100%{transform:none}25%{transform:rotate(-1.5deg)}75%{transform:rotate(1.5deg)}}
 .touch-drag-ghost{position:fixed;z-index:100010;pointer-events:none;opacity:.96;transform:scale(1.04);box-shadow:0 18px 38px rgba(40,20,55,.3)}
 @media(max-width:700px){.match-board.v104-match{grid-template-columns:1fr}.memory-grid.v104-memory{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.memory-card{min-height:88px;padding:8px}.match-card.fused{grid-template-columns:1fr;gap:4px}.match-card.fused .pair-link{transform:rotate(90deg)}}
+</style><style id="v105-touch-woordle-fix">
+.drag-follow-card{position:fixed!important;z-index:100020!important;pointer-events:none!important;margin:0!important;opacity:.98!important;transform:scale(1.055)!important;box-shadow:0 20px 44px rgba(40,20,55,.36)!important;transition:none!important;will-change:left,top}
+.woordle-row.woordle-winning-row .woordle-cell{background:#22c55e!important;border-color:#16a34a!important;color:#fff!important;animation:woordleWin .34s ease both}
+.woordle-row.woordle-winning-row .woordle-cell:nth-child(2){animation-delay:.05s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(3){animation-delay:.10s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(4){animation-delay:.15s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(5){animation-delay:.20s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(6){animation-delay:.25s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(7){animation-delay:.30s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(8){animation-delay:.35s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(9){animation-delay:.40s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(10){animation-delay:.45s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(11){animation-delay:.50s}.woordle-row.woordle-winning-row .woordle-cell:nth-child(12){animation-delay:.55s}
+@keyframes woordleWin{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
 </style></head>
 <body>
 <section id="auth"><div class="auth-grid"><div class="hero"><img class="brand-logo auth-brand-logo" src="assets/logo_bibel-halle.png" alt="Bibel-Halle Logo"><h1>Bibel-Halle</h1><p>Lies die Bibel, entdecke Spiele, sammle Abzeichen und gestalte deine eigene Ruhmeshalle.</p></div><div class="card authbox"><div class="tabs"><button id="tab-login" class="active">Anmelden</button><button id="tab-register">Registrieren</button></div><div id="auth-alert"></div><form id="login-form"><div class="field"><label>Name</label><input id="login-name" name="username" autocomplete="username" required></div><div class="field"><label>Passwort</label><input id="login-password" name="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">🔑 Anmelden</button><button type="button" id="forgot-open" class="btn sec" style="width:100%;margin-top:10px">Passwort vergessen?</button></form><form id="register-form" class="hidden"><div class="field"><label>Name</label><input id="reg-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Passwort</label><input id="reg-password" name="new-password" type="password" autocomplete="new-password" minlength="6" required></div><div class="field"><label>Passwort wiederholen</label><input id="reg-password2" name="new-password-confirm" type="password" autocomplete="new-password" minlength="6" required></div><button class="btn" style="width:100%">Konto erstellen</button></form><form id="forgot-form" class="hidden"><div class="field"><label>Benutzername</label><input id="forgot-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Kontakt-Mailadresse</label><input id="forgot-email" name="email" type="email" autocomplete="email" required></div><div class="field"><label>Nachricht an den Administrator (optional)</label><textarea id="forgot-message" maxlength="1000" placeholder="Zum Beispiel Hinweise zu deinem Konto"></textarea></div><p class="muted">Der Administrator prüft die Anfrage und nimmt über die angegebene Mailadresse Kontakt auf.</p><button class="btn" style="width:100%">Anfrage senden</button><button type="button" id="reset-open" class="btn sec" style="width:100%;margin-top:10px">Ich habe bereits einen Rücksetzcode</button><button type="button" id="forgot-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form><form id="reset-code-form" class="hidden"><div class="field"><label>Einmaliger Rücksetzcode</label><input id="reset-code" autocomplete="one-time-code" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" required></div><div class="field"><label>Neues Passwort</label><input id="reset-new-password" type="password" autocomplete="new-password" minlength="8" required></div><div class="field"><label>Neues Passwort wiederholen</label><input id="reset-new-password2" type="password" autocomplete="new-password" minlength="8" required></div><button class="btn" style="width:100%">Passwort zurücksetzen</button><button type="button" id="reset-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form></div></div></section>
@@ -704,7 +710,7 @@ function showApp(){$('#auth').classList.add('hidden');$('#shell').classList.remo
 function userInitial(){const n=(user?.username||'?').trim();return user?.equippedShopImage?`<img class="top-profile-image" src="${displayAssetUrl(user.equippedShopImage)}" alt="Profilbild">`:esc(user?.equippedEmoji||(n[0]||'?').toUpperCase())}
 function notificationBadge(count){return count?`<span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;margin-left:5px;border-radius:999px;background:#dc2626;color:white;font-size:.72rem;font-weight:900;line-height:1">${count}</span>`:''}
 function adminNotificationCount(){return ORDERS.filter(o=>o.status==='new').length+PASSWORD_RESET_REQUESTS.filter(r=>r.status==='new').length}
-function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v104</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
+function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v105</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
 function updateChrome(){$('#coin-chip').textContent=`🪙 ${user.coins||0} Coins`;$('#mobile-coins').textContent=`${user.coins||0} 🪙`}
 function head(icon,title,sub){return `<div class="page-head"><div class="ico">${icon}</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>`}
 function render(){updateChrome();if(page==='library')renderLibrary();if(page==='shop')renderShop();if(page==='room')renderRoom();if(page==='profile')renderProfile();if(page==='admin')renderAdmin()}
@@ -776,7 +782,25 @@ function renderLegacyGame(){
  if(g.type==='secret')$('#secret-finish').onclick=()=>finishGame(book,g,$('#secret-answer').value.trim().toUpperCase()===g.config.answer.toUpperCase()?100:0)
 }
 function woordleScore(guess,answer){const out=Array(answer.length).fill('gray'),left={};for(let i=0;i<answer.length;i++){if(guess[i]===answer[i])out[i]='green';else left[answer[i]]=(left[answer[i]]||0)+1}for(let i=0;i<answer.length;i++)if(out[i]!=='green'&&left[guess[i]]){out[i]='yellow';left[guess[i]]--}return out}
-function renderWoordle(book,g){const answer=norm(g.config.word),n=answer.length;gameState.guesses=gameState.guesses||[];gameState.mistakes=gameState.guesses.filter(x=>norm(x.word)!==answer).length;const rows=gameState.guesses.map(x=>`<div class="woordle-row" style="grid-template-columns:repeat(${n},1fr)">${[...x.word].map((ch,i)=>`<div class="woordle-cell ${x.score[i]}">${ch}</div>`).join('')}</div>`).join('');$('#content').innerHTML=`<button id="back-book" class="btn sec">← Spiel verlassen</button>${head('🟩',g.title,`Gesucht sind ${n} Buchstaben. Unbegrenzt viele Versuche.`)}<div class="card gamebox"><div class="woordle-board">${rows}</div><div class="field"><input id="woordle-input" maxlength="${n}" placeholder="${n}-stelliges Wort" style="text-transform:uppercase"></div><button id="woordle-guess" class="btn">Versuch prüfen</button><p class="muted">Grün: richtig platziert · Gelb: enthalten · Grau: nicht enthalten</p></div>`;$('#back-book').onclick=()=>leaveActiveGame(book.id);const submit=()=>{const word=norm($('#woordle-input').value);if(word.length!==n)return alert(`Bitte genau ${n} Buchstaben eingeben.`);const score=woordleScore(word,answer);gameState.guesses.push({word,score});if(word===answer)return setTimeout(()=>finishGame(book,g,100),650);gameState.mistakes=gameState.guesses.length;saveActiveAttempt();renderWoordle(book,g)};$('#woordle-guess').onclick=submit;$('#woordle-input').onkeydown=e=>{if(e.key==='Enter')submit()};$('#woordle-input').focus()}
+function renderWoordle(book,g){
+ const answer=norm(g.config.word),n=answer.length;gameState.guesses=gameState.guesses||[];
+ gameState.mistakes=gameState.guesses.filter(x=>norm(x.word)!==answer).length;
+ const rows=gameState.guesses.map((x,rowIndex)=>`<div class="woordle-row ${x.correct?'woordle-winning-row':''}" style="grid-template-columns:repeat(${n},1fr)">${[...x.word].map((ch,i)=>`<div class="woordle-cell ${x.score[i]}">${ch}</div>`).join('')}</div>`).join('');
+ const attempts=gameState.guesses.length,solved=gameState.guesses.some(x=>x.correct);
+ $('#content').innerHTML=`<button id="back-book" class="btn sec">← Spiel verlassen</button>${head('🟩',g.title,`Gesucht sind ${n} Buchstaben. Jeder abgeschickte Eintrag zählt als Versuch, auch das richtige Wort.`)}<div class="card gamebox"><div class="alert ok"><b>Versuche:</b> ${attempts}${solved?' · Das richtige Wort wurde vollständig grün eingetragen.':''}</div><div class="woordle-board">${rows}</div>${solved?'':`<div class="field"><input id="woordle-input" maxlength="${n}" placeholder="${n}-stelliges Wort" style="text-transform:uppercase"></div><button id="woordle-guess" class="btn">Versuch prüfen</button>`}<p class="muted">Grün: richtig platziert · Gelb: enthalten · Grau: nicht enthalten. Der richtige Lösungsversuch zählt mit.</p></div>`;
+ $('#back-book').onclick=()=>leaveActiveGame(book.id);
+ if(solved){saveActiveAttempt();setTimeout(()=>finishGame(book,g,100),1050);return}
+ let submitting=false;
+ const submit=()=>{
+  if(submitting)return;
+  const word=norm($('#woordle-input').value);if(word.length!==n)return alert(`Bitte genau ${n} Buchstaben eingeben.`);
+  submitting=true;const correct=word===answer,score=correct?Array(n).fill('green'):woordleScore(word,answer);
+  gameState.guesses.push({word,score,correct});
+  gameState.mistakes=gameState.guesses.filter(x=>!x.correct).length;
+  saveActiveAttempt();renderWoordle(book,g)
+ };
+ $('#woordle-guess').onclick=submit;$('#woordle-input').onkeydown=e=>{if(e.key==='Enter')submit()};$('#woordle-input').focus()
+}
 const MORSE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.'};
 function cipherText(text,method,shift=3){const up=text.toUpperCase(),alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';if(method==='caesar')return [...up].map(ch=>{const i=alpha.indexOf(ch);return i<0?ch:alpha[(i+shift)%26]}).join('');if(method==='keyboard'){const a='QWERTZUIOPÜASDFGHJKLÖÄYXCVBNM',b='WERTZUIOPÜASDFGHJKLÖÄYXCVBNM';return[...up].map(ch=>{const i=a.indexOf(ch);return i<0?ch:(b[i]||a[0])}).join('')}if(method==='morse')return[...up].map(ch=>ch===' '?' / ':(MORSE[ch]||ch)).join(' ');if(method==='reverse'){const raw=[...up.normalize('NFKC').replace(/\s+/g,'')].reverse().join('');const groups=[];for(let i=0;i<raw.length;i+=4)groups.push(raw.slice(i,i+4));return groups.join(' ')}if(method==='xinsert')return up.split(' ').map(w=>[...w].join('X')).join('  ');if(method==='numbers')return[...up].map(ch=>{const i=alpha.indexOf(ch);return i<0?(ch===' '?' / ':ch):String(i+1)}).join(' ');return up}
 function renderCipher(book,g){const c=g.config,encoded=cipherText(c.text,c.method,c.shift);$('#content').innerHTML=`<button id="back-book" class="btn sec">← Spiel verlassen</button>${head('🔐',g.title,'Entschlüssle den Text.')}<div class="card gamebox"><div class="cipher-box">${esc(encoded)}</div><div class="field"><textarea id="cipher-answer" placeholder="Entschlüsselter Text"></textarea></div><button id="cipher-check" class="btn">Prüfen</button></div>`;$('#back-book').onclick=()=>{returnFromGame(book.id)};const checkCipher=()=>{const input=$('#cipher-answer').value;if(norm(input)===norm(c.text))return finishGame(book,g,100);addMistake();alert('Noch nicht richtig. Du wirst den Code bestimmt noch knacken!');renderCipher(book,g)};$('#cipher-check').onclick=checkCipher;$('#cipher-answer').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();checkCipher()}}}
@@ -892,17 +916,31 @@ function bindScrambleTouch(){
  })})
 }
 function pointerDragCard(el,{targets,onDrop,onMoveClass='drop-hover'}){
+ let suppressClick=false;
+ el.addEventListener('click',e=>{if(suppressClick){e.preventDefault();e.stopImmediatePropagation();suppressClick=false}},true);
  el.onpointerdown=e=>{
   if(e.button!=null&&e.button!==0)return;
   if(el.disabled||el.classList.contains('used')||el.classList.contains('done'))return;
   e.preventDefault();
-  const rect=el.getBoundingClientRect(),ghost=el.cloneNode(true);
-  ghost.classList.add('dragging-touch');ghost.removeAttribute('draggable');ghost.removeAttribute('data-word');ghost.removeAttribute('data-match-source');
-  Object.assign(ghost.style,{width:rect.width+'px',height:rect.height+'px',left:(e.clientX-rect.width/2)+'px',top:(e.clientY-rect.height/2)+'px'});
-  document.body.appendChild(ghost);el.style.opacity='.35';let over=null,moved=false;
+  const rect=el.getBoundingClientRect(),offX=e.clientX-rect.left,offY=e.clientY-rect.top,ghost=el.cloneNode(true),startX=e.clientX,startY=e.clientY;
+  ghost.classList.add('drag-follow-card');ghost.removeAttribute('draggable');ghost.removeAttribute('data-word');ghost.removeAttribute('data-match-source');ghost.disabled=false;
+  Object.assign(ghost.style,{width:rect.width+'px',height:rect.height+'px',left:rect.left+'px',top:rect.top+'px'});
+  document.body.appendChild(ghost);el.style.opacity='.28';let over=null,moved=false;
   try{el.setPointerCapture(e.pointerId)}catch{}
-  const move=ev=>{moved=moved||Math.hypot(ev.clientX-e.clientX,ev.clientY-e.clientY)>6;ghost.style.left=(ev.clientX-rect.width/2)+'px';ghost.style.top=(ev.clientY-rect.height/2)+'px';const hit=document.elementFromPoint(ev.clientX,ev.clientY),next=targets().find(t=>t===hit||t.contains(hit))||null;if(over!==next){over?.classList.remove(onMoveClass);next?.classList.add(onMoveClass);over=next}ev.preventDefault()};
-  const end=ev=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',end);document.removeEventListener('pointercancel',end);over?.classList.remove(onMoveClass);ghost.remove();el.style.opacity='';if(over)onDrop(over,moved,ev)};
+  const position=ev=>{ghost.style.left=(ev.clientX-offX)+'px';ghost.style.top=(ev.clientY-offY)+'px'};
+  const move=ev=>{
+   if(Math.hypot(ev.clientX-startX,ev.clientY-startY)>5)moved=true;
+   position(ev);
+   const hit=document.elementFromPoint(ev.clientX,ev.clientY),next=targets().find(t=>t===hit||t.contains(hit))||null;
+   if(over!==next){over?.classList.remove(onMoveClass);next?.classList.add(onMoveClass);over=next}
+   ev.preventDefault()
+  };
+  const end=ev=>{
+   document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',end);document.removeEventListener('pointercancel',end);
+   over?.classList.remove(onMoveClass);ghost.remove();el.style.opacity='';
+   if(moved)suppressClick=true;
+   if(over&&moved)onDrop(over,true,ev)
+  };
   document.addEventListener('pointermove',move,{passive:false});document.addEventListener('pointerup',end,{once:true});document.addEventListener('pointercancel',end,{once:true})
  }
 }
