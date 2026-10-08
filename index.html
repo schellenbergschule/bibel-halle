@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#312e81">
-<title>Bibel-Halle v101</title>
+<title>Bibel-Halle v102</title>
 <link rel="icon" type="image/png" href="assets/logo_bibel-halle.png">
 
 <link rel="stylesheet" href="bible-hall-theme.css?v=081">
@@ -586,14 +586,16 @@
 .scramble-part{touch-action:none;-webkit-user-select:none;user-select:none}
 .scramble-part.touch-dragging{position:relative;z-index:20;opacity:.88;box-shadow:0 10px 24px rgba(46,24,74,.24);transform:scale(1.035)}
 .scramble-part.touch-over{outline:3px solid #a855f7;outline-offset:2px}
-</style><style id="v101-crossword-layout">
+</style><style id="v102-crossword-layout">
+/* Das Kreuzworträtsel darf auf grossen Bildschirmen fast die ganze Fensterbreite verwenden. */
+.crossword-gamebox{width:min(1800px,calc(100vw - 32px));max-width:none!important;position:relative;left:50%;transform:translateX(-50%);box-sizing:border-box}
 .crossword-clues{margin:0 0 18px;padding:16px;border:1px solid #e9d5ff;border-radius:16px;background:#faf5ff}
 .crossword-clues h3{margin:0 0 10px;color:#4c1d6f}
 .crossword-clue-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px;margin:0;padding:0;list-style:none}
 .crossword-clue{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start;line-height:1.4}
 .crossword-clue-number,.crossword-row-number{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#7c3aed;color:#fff;font-weight:950;font-size:.88rem;line-height:1}
 .crossword-puzzle-wrap{max-width:100%;overflow-x:auto;padding:4px 2px 12px;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
-.crossword-board{display:grid;gap:7px;width:max-content;min-width:min-content}
+.crossword-board{display:grid;gap:7px;width:max-content;min-width:min-content;margin-inline:auto}
 .crossword-row{display:grid;grid-template-columns:34px max-content;gap:8px;align-items:center}
 .crossword-row-number{position:sticky;left:0;z-index:3;box-shadow:0 0 0 4px #fff}
 .crossword-board .cross-grid{display:grid;gap:2px}
@@ -602,10 +604,17 @@
 .crossword-board input.cross-cell:focus{position:relative;z-index:2;outline:3px solid #7c3aed;outline-offset:-2px}
 .crossword-board input.cross-cell.solution{background:#fff0a3;border-color:#d89b13}
 .crossword-solution{max-width:520px;margin-top:18px}
+@media(min-width:1200px){
+ .crossword-gamebox{width:min(1800px,calc(100vw - 48px));padding-left:28px!important;padding-right:28px!important}
+ .crossword-board .cross-cell{width:38px;height:38px;min-width:38px;font-size:1.06rem}
+ .crossword-row{grid-template-columns:38px max-content;gap:10px}
+ .crossword-board .cross-grid{gap:3px}
+}
 @media(max-width:700px){
+ .crossword-gamebox{width:calc(100vw - 16px);padding-left:12px!important;padding-right:12px!important}
  .crossword-clue-list{grid-template-columns:1fr}
  .crossword-clues{padding:13px}
- .crossword-board{gap:6px}
+ .crossword-board{gap:6px;margin-inline:0}
  .crossword-row{grid-template-columns:30px max-content;gap:6px}
  .crossword-clue-number,.crossword-row-number{width:26px;height:26px;font-size:.8rem}
  .crossword-board .cross-cell{width:31px;height:31px;min-width:31px;font-size:.9rem}
@@ -673,7 +682,7 @@ function showApp(){$('#auth').classList.add('hidden');$('#shell').classList.remo
 function userInitial(){const n=(user?.username||'?').trim();return user?.equippedShopImage?`<img class="top-profile-image" src="${displayAssetUrl(user.equippedShopImage)}" alt="Profilbild">`:esc(user?.equippedEmoji||(n[0]||'?').toUpperCase())}
 function notificationBadge(count){return count?`<span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;margin-left:5px;border-radius:999px;background:#dc2626;color:white;font-size:.72rem;font-weight:900;line-height:1">${count}</span>`:''}
 function adminNotificationCount(){return ORDERS.filter(o=>o.status==='new').length+PASSWORD_RESET_REQUESTS.filter(r=>r.status==='new').length}
-function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v101</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
+function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v102</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
 function updateChrome(){$('#coin-chip').textContent=`🪙 ${user.coins||0} Coins`;$('#mobile-coins').textContent=`${user.coins||0} 🪙`}
 function head(icon,title,sub){return `<div class="page-head"><div class="ico">${icon}</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>`}
 function render(){updateChrome();if(page==='library')renderLibrary();if(page==='shop')renderShop();if(page==='room')renderRoom();if(page==='profile')renderProfile();if(page==='admin')renderAdmin()}
@@ -866,9 +875,10 @@ function renderWordSearch(book,g){const words=g.config.words||[];if(!gameState.g
 function renderCrossword(book,g){
  const c=g.config,entries=c.entries||[],max=Math.max(1,...entries.map(x=>(Math.max(1,+x.start||1)-1)+String(x.word||'').length));
  const clues=entries.map((e,i)=>`<li class="crossword-clue"><span class="crossword-clue-number">${i+1}</span><span>${esc(e.clue)}</span></li>`).join('');
- const rows=entries.map((e,r)=>{const start=Math.max(1,+e.start||1),word=String(e.word||'');return`<div class="crossword-row"><span class="crossword-row-number" title="Hinweis ${r+1}">${r+1}</span><div class="cross-grid" style="grid-template-columns:repeat(${max},34px)">${Array.from({length:max},(_,i)=>i<start-1||i>=start-1+word.length?'<span class="cross-cell block" aria-hidden="true"></span>':`<input class="cross-cell ${i+1===c.solutionCol?'solution':''}" data-r="${r}" data-i="${i-start+1}" maxlength="1" inputmode="text" autocomplete="off" aria-label="Hinweis ${r+1}, Buchstabe ${i-start+2}">`).join('')}</div></div>`}).join('');
- $('#content').innerHTML=`<button id="back-book" class="btn sec">← Spiel verlassen</button>${head('✚',g.title,'Fülle die nummerierten waagrechten Begriffe aus. Die Hinweise stehen übersichtlich oberhalb des Rätsels.')}<div class="card gamebox"><section class="crossword-clues" aria-labelledby="crossword-clues-title"><h3 id="crossword-clues-title">Hinweise</h3><ol class="crossword-clue-list">${clues}</ol></section><div class="crossword-puzzle-wrap"><div class="crossword-board">${rows}</div></div><div class="field crossword-solution"><label for="solution">Lösungswort</label><input id="solution" placeholder="Lösungswort" autocomplete="off"></div><button id="solve" class="btn">Prüfen</button></div>`;
+ const rows=entries.map((e,r)=>{const start=Math.max(1,+e.start||1),word=String(e.word||'');return`<div class="crossword-row"><span class="crossword-row-number" title="Hinweis ${r+1}">${r+1}</span><div class="cross-grid" style="grid-template-columns:repeat(${max},var(--cross-cell-size,34px))">${Array.from({length:max},(_,i)=>i<start-1||i>=start-1+word.length?'<span class="cross-cell block" aria-hidden="true"></span>':`<input class="cross-cell ${i+1===c.solutionCol?'solution':''}" data-r="${r}" data-i="${i-start+1}" maxlength="1" inputmode="text" autocomplete="off" aria-label="Hinweis ${r+1}, Buchstabe ${i-start+2}">`).join('')}</div></div>`}).join('');
+ $('#content').innerHTML=`<button id="back-book" class="btn sec">← Spiel verlassen</button>${head('✚',g.title,'Fülle die nummerierten waagrechten Begriffe aus. Die Hinweise stehen übersichtlich oberhalb des Rätsels.')}<div class="card gamebox crossword-gamebox"><section class="crossword-clues" aria-labelledby="crossword-clues-title"><h3 id="crossword-clues-title">Hinweise</h3><ol class="crossword-clue-list">${clues}</ol></section><div class="crossword-puzzle-wrap"><div class="crossword-board">${rows}</div></div><div class="field crossword-solution"><label for="solution">Lösungswort</label><input id="solution" placeholder="Lösungswort" autocomplete="off"></div><button id="solve" class="btn">Prüfen</button></div>`;
  $('#back-book').onclick=()=>{returnFromGame(book.id)};
+ const board=document.querySelector('.crossword-board'),gridWidth=max*(innerWidth>=1200?41:36),available=document.querySelector('.crossword-puzzle-wrap')?.clientWidth||0;if(board&&gridWidth<=available)board.style.marginInline='auto';
  const inputs=[...document.querySelectorAll('.crossword-board input.cross-cell')];
  inputs.forEach((x,i)=>{x.oninput=()=>{x.value=x.value.slice(-1).toUpperCase();if(x.value)inputs[i+1]?.focus()};x.onkeydown=e=>{if(e.key==='Backspace'&&!x.value&&i>0){e.preventDefault();inputs[i-1].focus();inputs[i-1].value=''}}});
  $('#solve').onclick=()=>{const complete=entries.every((e,r)=>[...document.querySelectorAll(`input[data-r="${r}"]`)].map(x=>x.value).join('').toUpperCase()===String(e.word||'').toUpperCase());complete&&norm($('#solution').value)===c.answer?finishGame(book,g,100):(addMistake(),alert('Noch nicht richtig.'))}
