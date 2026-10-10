@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Bibel-Halle">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Bibel-Halle v117</title>
+<title>Bibel-Halle v118</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
@@ -785,7 +785,7 @@ function showApp(){$('#auth').classList.add('hidden');$('#shell').classList.remo
 function userInitial(){const n=(user?.username||'?').trim();return user?.equippedShopImage?`<img class="top-profile-image" src="${displayAssetUrl(user.equippedShopImage)}" alt="Profilbild">`:esc(user?.equippedEmoji||(n[0]||'?').toUpperCase())}
 function notificationBadge(count){return count?`<span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;margin-left:5px;border-radius:999px;background:#dc2626;color:white;font-size:.72rem;font-weight:900;line-height:1">${count}</span>`:''}
 function adminNotificationCount(){return ORDERS.filter(o=>o.status==='new').length+PASSWORD_RESET_REQUESTS.filter(r=>r.status==='new').length}
-function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v117</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
+function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v118</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
 function updateChrome(){$('#coin-chip').textContent=`🪙 ${user.coins||0} Coins`;$('#mobile-coins').textContent=`${user.coins||0} 🪙`}
 function head(icon,title,sub){return `<div class="page-head"><div class="ico">${icon}</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>`}
 function render(){updateChrome();if(page==='library')renderLibrary();if(page==='shop')renderShop();if(page==='room')renderRoom();if(page==='profile')renderProfile();if(page==='admin')renderAdmin();requestAnimationFrame(appendSiteImprint)}
@@ -1295,5 +1295,19 @@ async function logout(){await firebaseSignOut(auth);user=null;location.reload()}
 onAuthStateChanged(auth,async firebaseUser=>{if(!firebaseUser){appStartedForUid=null;return}if(authFlowInProgress)return;try{const loginName=localStorage.getItem('bh_last_login_name')||firebaseUser.displayName||'BibleHall-Nutzer';await ensureSecureUserProfile(firebaseUser.uid,loginName);await startAuthenticatedApp(firebaseUser.uid)}catch(err){console.error('Profilstart fehlgeschlagen',err);alertAuth('Die Anmeldung war erfolgreich, aber das Profil konnte noch nicht vorbereitet werden. Bitte lade die Seite neu.')}});
 
 
+</script>
+
+<script id="pwa-service-worker-registration">
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+      .then(registration => {
+        console.log('Bibel-Halle Service Worker aktiv:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker konnte nicht registriert werden:', error);
+      });
+  });
+}
 </script>
 </body></html>
