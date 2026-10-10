@@ -1,0 +1,35 @@
+{
+  "id": "/bibel-halle/",
+  "name": "Bibel-Halle",
+  "short_name": "Bibel-Halle",
+  "description": "Bibel lesen, Spiele und Rätsel lösen und Belohnungen sammeln.",
+  "lang": "de-CH",
+  "dir": "ltr",
+  "start_url": "/bibel-halle/",
+  "scope": "/bibel-halle/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fff7ed",
+  "theme_color": "#312e81",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/bibel-halle/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/bibel-halle/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/bibel-halle/assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
