@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Bibel-Halle">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Bibel-Halle v148</title>
+<title>Bibel-Halle v149</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
@@ -1005,6 +1005,93 @@ audio.media-riddle-player{min-height:58px;background:transparent;box-shadow:none
 /* Kleine Rundungen am Papierblock erinnern an die oberen und unteren Falzkanten. */
 .open-book-left{border-radius:4px 1px 1px 4px!important}
 .open-book-right{border-radius:1px 4px 4px 1px!important}
+</style><style id="v149-redrawn-open-book">
+/* V149: komplett neu gezeichnetes, kompaktes Buch. Keine Rahmenbox, sondern zwei Seitenhaelften auf einem Einband. */
+.open-book-stage{
+  display:flex!important;justify-content:center!important;align-items:center!important;
+  min-height:136px!important;padding:25px 16px 18px!important;overflow:visible!important;
+  perspective:1100px!important;
+}
+.open-book{
+  position:relative!important;isolation:isolate!important;display:grid!important;
+  grid-template-columns:1fr 1fr!important;width:min(356px,calc(100% - 34px))!important;
+  min-height:108px!important;margin:0 auto!important;overflow:visible!important;
+  filter:drop-shadow(0 10px 10px rgba(40,18,42,.22))!important;
+  transform-origin:50% 100%!important;
+}
+/* Einband aus zwei Buchdeckeln, bewusst nicht als geschlossener Bilderrahmen. */
+.open-book:after{
+  content:""!important;display:block!important;position:absolute!important;z-index:-3!important;
+  left:-10px!important;right:-10px!important;top:-6px!important;bottom:-10px!important;height:auto!important;
+  border-radius:11px 11px 16px 16px!important;
+  background:
+    linear-gradient(90deg,transparent 49.1%,rgba(255,176,0,.72) 49.4%,rgba(255,176,0,.72) 50.6%,transparent 50.9%),
+    linear-gradient(105deg,#1d0b21 0%,#281228 21%,#4c1749 46%,#281228 51%,#4c1749 55%,#281228 79%,#1d0b21 100%)!important;
+  border:2px solid #281228!important;
+  box-shadow:inset 0 0 0 2px rgba(255,77,166,.36),inset 0 -5px 0 rgba(12,4,16,.28),0 5px 8px rgba(40,18,40,.24)!important;
+}
+/* Kein technischer Mittelbalken. */
+.open-book:before{content:none!important;display:none!important}
+.open-book-page{
+  position:relative!important;z-index:1!important;box-sizing:border-box!important;
+  min-height:108px!important;padding:16px 23px!important;overflow:visible!important;
+  border:1px solid #e5dcc7!important;color:#352515!important;
+  box-shadow:none!important;
+}
+/* Leicht geschwungene Seitenkonturen. Die Innenkante sinkt zur Falz hin ab. */
+.open-book-left{
+  align-items:center!important;text-align:center!important;
+  border-radius:13px 2px 7px 11px!important;
+  clip-path:polygon(0 2%,94% 4%,100% 11%,100% 95%,94% 100%,0 97%)!important;
+  background:linear-gradient(90deg,#f4ecd9 0%,#fffdf4 14%,#fffdf7 69%,#eee5d2 86%,#c4b9a6 97%,#8f8271 100%)!important;
+  transform:rotateY(2.2deg) rotateZ(-.35deg)!important;transform-origin:100% 100%!important;
+  box-shadow:inset -13px 0 18px rgba(57,43,34,.15),inset 0 -5px 8px rgba(124,91,52,.06)!important;
+}
+.open-book-right{
+  align-items:center!important;text-align:center!important;
+  border-radius:2px 13px 11px 7px!important;
+  clip-path:polygon(0 11%,6% 4%,100% 2%,100% 97%,6% 100%,0 95%)!important;
+  background:linear-gradient(90deg,#8f8271 0%,#c4b9a6 3%,#eee5d2 14%,#fffdf7 31%,#fffdf4 86%,#f4ecd9 100%)!important;
+  transform:rotateY(-2.2deg) rotateZ(.35deg)!important;transform-origin:0 100%!important;
+  box-shadow:inset 13px 0 18px rgba(57,43,34,.15),inset 0 -5px 8px rgba(124,91,52,.06)!important;
+}
+/* Dünne Papierkontur statt Innenrahmen. */
+.open-book-page:after{
+  content:""!important;position:absolute!important;z-index:1!important;inset:5px 6px!important;
+  border:1px solid rgba(173,144,89,.2)!important;border-radius:7px!important;pointer-events:none!important;
+}
+/* Die Falz entsteht ausschliesslich durch weiche Schatten beider Seiten. */
+.open-book-left:before,.open-book-right:before{
+  content:""!important;display:block!important;position:absolute!important;z-index:2!important;
+  top:5px!important;bottom:5px!important;width:24px!important;pointer-events:none!important;opacity:1!important;
+}
+.open-book-left:before{right:0!important;background:linear-gradient(90deg,transparent,rgba(30,22,18,.30))!important}
+.open-book-right:before{left:0!important;background:linear-gradient(90deg,rgba(30,22,18,.30),transparent)!important}
+.open-book-icon,.open-book-kicker,.open-book h2,.open-book .btn{position:relative!important;z-index:5!important}
+.open-book-icon{
+  width:28px!important;height:34px!important;margin:0 0 4px!important;border-radius:4px 8px 8px 4px!important;
+  background:linear-gradient(135deg,#c62576,#7c3aed)!important;color:#fff!important;font-size:.88rem!important;
+  box-shadow:2px 2px 0 #ffb000!important;
+}
+.open-book-kicker{font-size:.47rem!important;letter-spacing:.1em!important;color:#8b2fc9!important}
+.open-book h2{margin:1px 0 0!important;font:700 .93rem/1.05 Georgia,serif!important;color:#352515!important}
+.open-book .btn{
+  width:auto!important;min-width:104px!important;align-self:center!important;padding:8px 13px!important;
+  border-radius:10px 10px 10px 3px!important;background:linear-gradient(135deg,#c62576,#ff00ff)!important;
+  color:#fff!important;font-size:.76rem!important;box-shadow:0 6px 13px rgba(198,37,118,.23)!important;
+}
+.open-book .btn:before{content:"🔖";margin-right:5px;font-size:.78rem}
+/* Beim echten Buchwechsel darf das neue Buch aufschlagen; beim Reiterwechsel bleibt es unveraendert. */
+@keyframes bookOpen{0%{opacity:.25;transform:scaleX(.12) rotateX(7deg)}62%{opacity:1;transform:scaleX(1.025) rotateX(0)}100%{transform:scaleX(1)}}
+/* Ausreichend Luft zwischen Regalbrett und Buch, damit nichts abgeschnitten wird. */
+.bookshelf-wrap{padding-bottom:13px!important}.open-book-stage{margin-top:4px!important}
+@media(max-width:620px){
+ .open-book-stage{min-height:124px!important;padding:22px 12px 16px!important}
+ .open-book{width:min(310px,calc(100% - 28px))!important;min-height:100px!important}
+ .open-book-page{min-height:100px!important;padding:14px 16px!important}
+ .open-book:after{left:-8px!important;right:-8px!important;top:-5px!important;bottom:-8px!important}
+ .open-book h2{font-size:.84rem!important}.open-book .btn{min-width:96px!important;padding:7px 10px!important}
+}
 </style></head>
 <body>
 <section id="auth"><div class="auth-grid"><div class="hero"><img class="brand-logo auth-brand-logo" src="assets/logo_bibel-halle.png" alt="Bibel-Halle Logo"><h1>Bibel-Halle</h1><p>Lies die Bibel, entdecke Spiele, sammle Abzeichen und gestalte deine eigene Ruhmeshalle.</p></div><div class="card authbox"><div class="tabs"><button id="tab-login" class="active">Anmelden</button><button id="tab-register">Registrieren</button></div><div id="auth-alert"></div><form id="login-form"><div class="field"><label>Name</label><input id="login-name" name="username" autocomplete="username" required></div><div class="field"><label>Passwort</label><input id="login-password" name="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">🔑 Anmelden</button><button type="button" id="forgot-open" class="btn sec" style="width:100%;margin-top:10px">Passwort vergessen?</button></form><form id="register-form" class="hidden"><div class="field"><label>Name</label><input id="reg-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Passwort</label><input id="reg-password" name="new-password" type="password" autocomplete="new-password" minlength="6" required></div><div class="field"><label>Passwort wiederholen</label><input id="reg-password2" name="new-password-confirm" type="password" autocomplete="new-password" minlength="6" required></div><button class="btn" style="width:100%">Konto erstellen</button></form><form id="forgot-form" class="hidden"><div class="field"><label>Benutzername</label><input id="forgot-name" name="username" autocomplete="username" maxlength="24" required></div><div class="field"><label>Kontakt-Mailadresse</label><input id="forgot-email" name="email" type="email" autocomplete="email" required></div><div class="field"><label>Nachricht an den Administrator (optional)</label><textarea id="forgot-message" maxlength="1000" placeholder="Zum Beispiel Hinweise zu deinem Konto"></textarea></div><p class="muted">Der Administrator prüft die Anfrage und nimmt über die angegebene Mailadresse Kontakt auf.</p><button class="btn" style="width:100%">Anfrage senden</button><button type="button" id="reset-open" class="btn sec" style="width:100%;margin-top:10px">Ich habe bereits einen Rücksetzcode</button><button type="button" id="forgot-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form><form id="reset-code-form" class="hidden"><div class="field"><label>Einmaliger Rücksetzcode</label><input id="reset-code" autocomplete="one-time-code" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX" required></div><div class="field"><label>Neues Passwort</label><input id="reset-new-password" type="password" autocomplete="new-password" minlength="8" required></div><div class="field"><label>Neues Passwort wiederholen</label><input id="reset-new-password2" type="password" autocomplete="new-password" minlength="8" required></div><button class="btn" style="width:100%">Passwort zurücksetzen</button><button type="button" id="reset-back" class="btn sec" style="width:100%;margin-top:10px">Zurück zur Anmeldung</button></form></div></div></section>
@@ -1071,7 +1158,7 @@ function showApp(){$('#auth').classList.add('hidden');$('#shell').classList.remo
 function userInitial(){const n=(user?.username||'?').trim();return user?.equippedShopImage?`<img class="top-profile-image" src="${displayAssetUrl(user.equippedShopImage)}" alt="Profilbild">`:esc(user?.equippedEmoji||(n[0]||'?').toUpperCase())}
 function notificationBadge(count){return count?`<span style="display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;margin-left:5px;border-radius:999px;background:#dc2626;color:white;font-size:.72rem;font-weight:900;line-height:1">${count}</span>`:''}
 function adminNotificationCount(){return ORDERS.filter(o=>o.status==='new').length+PASSWORD_RESET_REQUESTS.filter(r=>r.status==='new').length}
-function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v148</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
+function renderNav(){const arr=[...nav,...(isContentAdmin()?[['admin','🛡️',isMainAdmin()?'Admin':'Inhalte']]:[])];$('#desktop-nav').innerHTML='';$('#mobile-nav').innerHTML=arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}"><div>${n[1]}</div>${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('');$('#app-topbar').innerHTML=`<div class="topbar-inner"><div class="top-brand"><img class="brand-logo top-brand-logo" src="assets/logo_bibel-halle.png" alt=""> Bibel-Halle <small style="font-size:.62rem;opacity:.7">v149</small></div><nav class="top-links">${arr.map(n=>`<button data-page="${n[0]}" class="${page===n[0]?'active':''}">${n[1]} ${n[2]}${n[0]==='admin'?notificationBadge(adminNotificationCount()):''}</button>`).join('')}</nav><div class="top-coins">🪙 ${user.coins||0}</div><div class="top-user-initial ${user.equippedEmoji||user.equippedShopImage?'equipped-emoji':''}" title="${esc(user.username)}">${userInitial()}</div></div>`;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.dataset.page;gameState=null;openBookId=null;window.scrollTo({top:0,left:0,behavior:'auto'});document.querySelector('.main')?.scrollTo?.({top:0,left:0,behavior:'auto'});renderNav();render()});updateChrome()}
 function updateChrome(){$('#coin-chip').textContent=`🪙 ${user.coins||0} Coins`;$('#mobile-coins').textContent=`${user.coins||0} 🪙`}
 function head(icon,title,sub){return `<div class="page-head"><div class="ico">${icon}</div><div><h1>${esc(title)}</h1><p>${esc(sub)}</p></div></div>`}
 function render(){updateChrome();if(page==='library')renderLibrary();if(page==='shop')renderShop();if(page==='room')renderRoom();if(page==='profile')renderProfile();if(page==='admin')renderAdmin();requestAnimationFrame(appendSiteImprint)}
