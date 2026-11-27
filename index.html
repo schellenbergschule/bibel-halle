@@ -1879,7 +1879,12 @@ if ('serviceWorker' in navigator) {
 })();
 </script>
 
+<button id="winterdorf-open" type="button">❄️ Winterdorf</button>
+ 
 <script>
+
+document.getElementById('winterdorf-open').addEventListener('click',function(){window.open('winterdorf/','_blank');});
+ 
 window.addEventListener('message', function(event) {
   if (event.origin !== window.location.origin) return;
 
