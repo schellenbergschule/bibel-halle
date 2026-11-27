@@ -1877,4 +1877,22 @@ if ('serviceWorker' in navigator) {
   document.fonts?.ready?.then(schedule);
   schedule();
 })();
-</script></body></html>
+</script>
+
+<script>
+window.addEventListener('message', function(event) {
+  if (event.origin !== window.location.origin) return;
+
+  const data = event.data;
+
+  if (
+    data &&
+    data.source === 'bibelhalle-winterdorf' &&
+    data.type === 'GAME_COMPLETED' &&
+    data.gameId === 'winterdorf'
+  ) {
+    alert('Die Bibel-Halle hat den erfolgreichen Abschluss des Winterdorfs erkannt!');
+  }
+});
+</script>
+</body></html>
