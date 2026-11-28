@@ -1273,6 +1273,19 @@ $('#login-form').onsubmit=async e=>{e.preventDefault();const name=$('#login-name
 async function ensureAdminTestCoins(){if(user?.role!=='admin'||user.adminTestCoinsGranted)return;user={...user,coins:(user.coins||0)+10000,adminTestCoinsGranted:true};await updateDoc(doc(db,'users',user.uid),{coins:user.coins,adminTestCoinsGranted:true,updatedAt:serverTimestamp()})}
 async function loadUser(uid){const snap=await getDoc(doc(db,'users',uid));if(!snap.exists())throw new Error('Konto nicht gefunden');user=snap.data();await ensureAdminTestCoins()}
 async function patchUser(patch){user={...user,...patch};await updateDoc(doc(db,'users',user.uid),{...patch,updatedAt:serverTimestamp()});updateChrome()}
+window.awardWinterdorfTree=async function(){
+  const rewardId='winterdorf-tannenbaum';
+  const owned=[...(user.ownedShopItems||[])];
+
+  if(owned.includes(rewardId)){
+    alert('Du hast das Winterdorf geschafft. Der Tannenbaum befindet sich bereits in deiner Sammlung.');
+    return;
+  }
+
+  owned.push(rewardId);
+  await patchUser({ownedShopItems:owned});
+  alert('Geschafft! Du hast einen geschmückten Tannenbaum für dein Pokalregal erhalten.');
+};
 const BIBLE_ORDER=['1. mose','2. mose','3. mose','4. mose','5. mose','josua','richter','rut','1. samuel','2. samuel','1. könige','2. könige','1. chronik','2. chronik','esra','nehemia','ester','hiob','psalmen','sprüche','prediger','hohelied','jesaja','jeremia','klagelieder','hesekiel','daniel','hosea','joel','amos','obadja','jona','micha','nahum','habakuk','zefanja','haggai','sacharja','maleachi','matthäus','markus','lukas','johannes','apostelgeschichte','römer','1. korinther','2. korinther','galater','epheser','philipper','kolosser','1. thessalonicher','2. thessalonicher','1. timotheus','2. timotheus','titus','philemon','hebräer','jakobus','1. petrus','2. petrus','1. johannes','2. johannes','3. johannes','judas','offenbarung'];
 function bibleOrder(book){const t=canonicalBookTitle(book?.title),i=BIBLE_ORDER.findIndex(x=>t===x||t.startsWith(x+' '));return i<0?999:i}
 function gameSectionOrder(book,g){const ids=(g.requiredSectionIds||[]).map(requiredSectionId),idx=ids.map(id=>(book.sections||[]).findIndex(x=>[x.id,x.reference,x.title].some(v=>String(v||'')===id))).filter(i=>i>=0);return idx.length?Math.max(...idx):-1}
@@ -1879,7 +1892,7 @@ if ('serviceWorker' in navigator) {
 })();
 </script>
 
-<button id="winterdorf-open" type="button">❄️ Winterdorf</button>
+<!--<button id="winterdorf-open" type="button">❄️ Winterdorf</button>-->
  
 <script>
 
@@ -1897,8 +1910,12 @@ window.addEventListener('message', async function(event) {
     data.gameId === 'winterdorf'
   ) {
 
-   const owned = [...(user.ownedShopItems || [])];
-
+if (typeof window.awardWinterdorfTree === 'function') {
+  await window.awardWinterdorfTree();
+} else {
+  console.error('Die Winterdorf-Belohnungsfunktion ist nicht verfügbar.');
+}
+   
 if (!owned.includes('winterdorf-tannenbaum')) {
   owned.push('winterdorf-tannenbaum');
   await patchUser({ ownedShopItems: owned });
